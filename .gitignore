@@ -1,0 +1,53 @@
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+.env
+*.env
+.Python
+
+# ── Testing / Coverage ───────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ── Alembic ──────────────────────────────────────────────────────────────────
+# keep versions/ tracked; ignore nothing extra
+
+# ── Node / Frontend ──────────────────────────────────────────────────────────
+node_modules/
+dist/
+.next/
+.nuxt/
+.cache/
+*.local
+
+# ── Vite ─────────────────────────────────────────────────────────────────────
+frontend/dist/
+frontend/.vite/
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Docker ───────────────────────────────────────────────────────────────────
+# docker-compose overrides with local secrets
+docker-compose.override.yml
