@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Input, Space, Tooltip, Typography } from "antd";
-import { TeamOutlined } from "@ant-design/icons";
+import { Button, Card, Input, Space, Tooltip, Typography } from "antd";
+import { TeamOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import { AgGridReact } from "ag-grid-react";
 import { themeQuartz } from "ag-grid-community";
 import type { ColDef, ICellRendererParams } from "ag-grid-community";
@@ -9,7 +9,7 @@ import { useCafes, useDeleteCafe } from "../../hooks/useCafes";
 import ConfirmModal from "../../components/ConfirmModal";
 import type { Cafe } from "../../types/cafe";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export default function CafesPage() {
   const navigate = useNavigate();
@@ -99,39 +99,50 @@ export default function CafesPage() {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "space-between",
-          marginBottom: 16,
+          marginBottom: 24,
         }}
       >
-        <Title level={3} style={{ margin: 0 }}>
-          Cafes
-        </Title>
-        <Button type="primary" onClick={() => navigate("/cafes/new")}>
-          + Add New Cafe
+        <div>
+          <Title level={2} style={{ margin: 0 }}>
+            Cafes
+          </Title>
+          <Text type="secondary">Manage your cafe locations</Text>
+        </div>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          size="large"
+          onClick={() => navigate("/cafes/new")}
+        >
+          Add New Cafe
         </Button>
       </div>
 
-      <div style={{ marginBottom: 16 }}>
-        <Input
-          placeholder="Filter by location"
-          value={locationInput}
-          onChange={(e) => setLocationInput(e.target.value)}
-          allowClear
-          style={{ width: 240 }}
-        />
-      </div>
+      <Card bordered={false} style={{ boxShadow: "0 1px 6px rgba(0,0,0,0.08)", borderRadius: 8 }}>
+        <div style={{ marginBottom: 16 }}>
+          <Input
+            placeholder="Filter by location"
+            value={locationInput}
+            onChange={(e) => setLocationInput(e.target.value)}
+            allowClear
+            prefix={<SearchOutlined style={{ color: "#bbb" }} />}
+            style={{ width: 280 }}
+          />
+        </div>
 
-      <div style={{ height: 500 }}>
-        <AgGridReact
-          theme={themeQuartz}
-          loadThemeGoogleFonts={false}
-          rowData={cafes}
-          columnDefs={colDefs}
-          loading={isLoading}
-          rowHeight={56}
-        />
-      </div>
+        <div style={{ height: 480 }}>
+          <AgGridReact
+            theme={themeQuartz}
+            loadThemeGoogleFonts={false}
+            rowData={cafes}
+            columnDefs={colDefs}
+            loading={isLoading}
+            rowHeight={56}
+          />
+        </div>
+      </Card>
 
       <ConfirmModal
         open={!!deleteTarget}

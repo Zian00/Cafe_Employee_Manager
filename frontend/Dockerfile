@@ -1,4 +1,17 @@
-# Stage 1: build
+# Stage dev: Vite dev server with hot-reload (used by docker compose watch)
+FROM node:22-alpine AS dev
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+EXPOSE 5173
+CMD ["npm", "run", "dev", "--", "--host"]
+
+# Stage 1: build (production)
 FROM node:22-alpine AS builder
 
 WORKDIR /app

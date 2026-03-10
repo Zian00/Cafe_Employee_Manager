@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Button, Space, Tag, Typography } from 'antd'
+import { Button, Card, Space, Tag, Typography } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import { AgGridReact } from 'ag-grid-react'
 import { themeQuartz } from 'ag-grid-community'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
@@ -8,7 +9,7 @@ import { useEmployees, useDeleteEmployee } from '../../hooks/useEmployees'
 import ConfirmModal from '../../components/ConfirmModal'
 import type { Employee } from '../../types/employee'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
 export default function EmployeesPage() {
   const navigate = useNavigate()
@@ -55,36 +56,49 @@ export default function EmployeesPage() {
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'space-between',
-          marginBottom: 16,
+          marginBottom: 24,
         }}
       >
-        <Space align="center">
-          <Title level={3} style={{ margin: 0 }}>
+        <div>
+          <Title level={2} style={{ margin: 0 }}>
             Employees
+            {cafeFilter && (
+              <Tag
+                closable
+                onClose={() => setSearchParams({})}
+                color="blue"
+                style={{ marginLeft: 8, fontSize: 14, fontWeight: 400, verticalAlign: 'middle' }}
+              >
+                Filtered by cafe
+              </Tag>
+            )}
           </Title>
-          {cafeFilter && (
-            <Tag closable onClose={() => setSearchParams({})}>
-              Filtered by cafe
-            </Tag>
-          )}
-        </Space>
-        <Button type="primary" onClick={() => navigate('/employees/new')}>
-          + Add New Employee
+          <Text type="secondary">View and manage all staff members</Text>
+        </div>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          size="large"
+          onClick={() => navigate('/employees/new')}
+        >
+          Add New Employee
         </Button>
       </div>
 
-      <div style={{ height: 500 }}>
-        <AgGridReact
-          theme={themeQuartz}
-          loadThemeGoogleFonts={false}
-          rowData={employees}
-          columnDefs={colDefs}
-          loading={isLoading}
-          rowHeight={48}
-        />
-      </div>
+      <Card bordered={false} style={{ boxShadow: '0 1px 6px rgba(0,0,0,0.08)', borderRadius: 8 }}>
+        <div style={{ height: 480 }}>
+          <AgGridReact
+            theme={themeQuartz}
+            loadThemeGoogleFonts={false}
+            rowData={employees}
+            columnDefs={colDefs}
+            loading={isLoading}
+            rowHeight={48}
+          />
+        </div>
+      </Card>
 
       <ConfirmModal
         open={!!deleteTarget}

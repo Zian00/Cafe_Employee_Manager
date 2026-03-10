@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useBlocker } from "react-router-dom";
-import { Form, Upload, Button, Typography, Spin, message } from "antd";
+import { Form, Upload, Button, Card, Typography, Spin, message } from "antd";
 import type { UploadFile } from "antd";
+import { ArrowLeftOutlined, PictureOutlined } from "@ant-design/icons";
 import { useCafes, useCreateCafe, useUpdateCafe } from "../../hooks/useCafes";
 import ReusableTextbox from "../../components/ReusableTextbox";
 import FormActions from "../../components/FormActions";
 import ConfirmModal from "../../components/ConfirmModal";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const MAX_LOGO_BYTES = 2 * 1024 * 1024; // 2 MB
 
 interface CafeFormValues {
@@ -118,81 +119,99 @@ export default function CafeFormPage() {
   }
 
   return (
-    <div style={{ maxWidth: 600 }}>
-      <Title level={3}>{isEdit ? "Edit Cafe" : "Add New Cafe"}</Title>
-
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        onValuesChange={markDirty}
+    <div style={{ maxWidth: 640, margin: '0 auto' }}>
+      <Button
+        type="link"
+        icon={<ArrowLeftOutlined />}
+        onClick={() => navigate("/cafes")}
+        style={{ padding: 0, marginBottom: 8, color: "#666" }}
       >
-        <ReusableTextbox
-          label="Name"
-          name="name"
-          rules={[
-            { required: true, message: "Name is required." },
-            { min: 6, message: "Name must be at least 6 characters." },
-            { max: 10, message: "Name must not exceed 10 characters." },
-          ]}
-        />
+        Back to Cafes
+      </Button>
+      <div style={{ marginBottom: 24 }}>
+        <Title level={2} style={{ margin: 0 }}>
+          {isEdit ? "Edit Cafe" : "Add New Cafe"}
+        </Title>
+        <Text type="secondary">
+          {isEdit ? "Update the details for this cafe" : "Fill in the details to add a new cafe"}
+        </Text>
+      </div>
 
-        <ReusableTextbox
-          label="Description"
-          name="description"
-          textarea
-          rules={[
-            { required: true, message: "Description is required." },
-            {
-              max: 256,
-              message: "Description must not exceed 256 characters.",
-            },
-          ]}
-        />
+      <Card bordered={false} style={{ boxShadow: "0 1px 6px rgba(0,0,0,0.08)", borderRadius: 8 }}>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          onValuesChange={markDirty}
+        >
+          <ReusableTextbox
+            label="Name"
+            name="name"
+            rules={[
+              { required: true, message: "Name is required." },
+              { min: 6, message: "Name must be at least 6 characters." },
+              { max: 10, message: "Name must not exceed 10 characters." },
+            ]}
+          />
 
-        <ReusableTextbox
-          label="Location"
-          name="location"
-          rules={[{ required: true, message: "Location is required." }]}
-        />
+          <ReusableTextbox
+            label="Description"
+            name="description"
+            textarea
+            rules={[
+              { required: true, message: "Description is required." },
+              {
+                max: 256,
+                message: "Description must not exceed 256 characters.",
+              },
+            ]}
+          />
 
-        <Form.Item label="Logo (max 2 MB, optional)">
-          {logoPreview && (
-            <div style={{ marginBottom: 8 }}>
-              <img
-                src={logoPreview}
-                alt="logo preview"
-                style={{
-                  height: 80,
-                  width: 80,
-                  objectFit: "cover",
-                  borderRadius: 4,
-                }}
-              />
-            </div>
-          )}
-          <Upload
-            fileList={fileList}
-            beforeUpload={handleUpload}
-            onRemove={() => {
-              setLogoFile(null);
-              setLogoPreview(null);
-              setFileList([]);
-              markDirty();
-            }}
-            accept="image/*"
-            maxCount={1}
-          >
-            <Button>Upload Logo</Button>
-          </Upload>
-        </Form.Item>
+          <ReusableTextbox
+            label="Location"
+            name="location"
+            rules={[{ required: true, message: "Location is required." }]}
+          />
 
-        <FormActions
-          onCancel={() => navigate("/cafes")}
-          submitLabel={isEdit ? "Save Changes" : "Create Cafe"}
-          loading={isSaving}
-        />
-      </Form>
+          <Form.Item label="Logo (max 2 MB, optional)">
+            {logoPreview && (
+              <div style={{ marginBottom: 12 }}>
+                <img
+                  src={logoPreview}
+                  alt="logo preview"
+                  style={{
+                    height: 88,
+                    width: 88,
+                    objectFit: "cover",
+                    borderRadius: 8,
+                    border: "1px solid #e5e7eb",
+                  }}
+                />
+              </div>
+            )}
+            <Upload
+              fileList={fileList}
+              beforeUpload={handleUpload}
+              onRemove={() => {
+                setLogoFile(null);
+                setLogoPreview(null);
+                setFileList([]);
+                markDirty();
+              }}
+              accept="image/*"
+              maxCount={1}
+            >
+              <Button icon={<PictureOutlined />}>Upload Logo</Button>
+            </Upload>
+          </Form.Item>
+
+          <FormActions
+            onCancel={() => navigate("/cafes")}
+            submitLabel={isEdit ? "Save Changes" : "Create Cafe"}
+            loading={isSaving}
+          />
+        </Form>
+      </Card>
 
       {/* Warn on unsaved changes for in-app navigation */}
       <ConfirmModal

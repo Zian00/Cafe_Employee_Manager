@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useBlocker } from "react-router-dom";
-import { Form, Radio, Select, Typography, Spin, message } from "antd";
+import { Form, Radio, Select, Card, Typography, Spin, message } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import {
   useEmployees,
   useCreateEmployee,
@@ -12,7 +13,7 @@ import FormActions from "../../components/FormActions";
 import ConfirmModal from "../../components/ConfirmModal";
 import type { Gender } from "../../types/employee";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface EmployeeFormValues {
   name: string;
@@ -108,72 +109,99 @@ export default function EmployeeFormPage() {
   }
 
   return (
-    <div style={{ maxWidth: 600 }}>
-      <Title level={3}>{isEdit ? "Edit Employee" : "Add New Employee"}</Title>
-
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        onValuesChange={markDirty}
+    <div style={{ maxWidth: 640, margin: '0 auto' }}>
+      <button
+        type="button"
+        onClick={() => navigate("/employees")}
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          color: "#666",
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          padding: 0,
+          marginBottom: 8,
+          fontSize: 14,
+        }}
       >
-        <ReusableTextbox
-          label="Name"
-          name="name"
-          rules={[
-            { required: true, message: "Name is required." },
-            { min: 6, message: "Name must be at least 6 characters." },
-            { max: 10, message: "Name must not exceed 10 characters." },
-          ]}
-        />
+        <ArrowLeftOutlined /> Back to Employees
+      </button>
+      <div style={{ marginBottom: 24 }}>
+        <Title level={2} style={{ margin: 0 }}>
+          {isEdit ? "Edit Employee" : "Add New Employee"}
+        </Title>
+        <Text type="secondary">
+          {isEdit ? "Update this employee's details" : "Fill in the details to add a new employee"}
+        </Text>
+      </div>
 
-        <ReusableTextbox
-          label="Email Address"
-          name="email_address"
-          rules={[
-            { required: true, message: "Email is required." },
-            { type: "email", message: "Enter a valid email address." },
-          ]}
-        />
-
-        <ReusableTextbox
-          label="Phone Number"
-          name="phone_number"
-          rules={[
-            { required: true, message: "Phone number is required." },
-            {
-              pattern: /^[89]\d{7}$/,
-              message: "Phone must start with 8 or 9 and be exactly 8 digits.",
-            },
-          ]}
-          inputProps={{ placeholder: "e.g. 81234567" }}
-        />
-
-        <Form.Item
-          label="Gender"
-          name="gender"
-          rules={[{ required: true, message: "Gender is required." }]}
+      <Card bordered={false} style={{ boxShadow: "0 1px 6px rgba(0,0,0,0.08)", borderRadius: 8 }}>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          onValuesChange={markDirty}
         >
-          <Radio.Group>
-            <Radio value="Male">Male</Radio>
-            <Radio value="Female">Female</Radio>
-          </Radio.Group>
-        </Form.Item>
-
-        <Form.Item label="Assigned Cafe (optional)" name="cafe_id">
-          <Select
-            placeholder="Select a cafe"
-            allowClear
-            options={cafes.map((c) => ({ value: c.id, label: c.name }))}
+          <ReusableTextbox
+            label="Name"
+            name="name"
+            rules={[
+              { required: true, message: "Name is required." },
+              { min: 6, message: "Name must be at least 6 characters." },
+              { max: 10, message: "Name must not exceed 10 characters." },
+            ]}
           />
-        </Form.Item>
 
-        <FormActions
-          onCancel={() => navigate("/employees")}
-          submitLabel={isEdit ? "Save Changes" : "Create Employee"}
-          loading={isSaving}
-        />
-      </Form>
+          <ReusableTextbox
+            label="Email Address"
+            name="email_address"
+            rules={[
+              { required: true, message: "Email is required." },
+              { type: "email", message: "Enter a valid email address." },
+            ]}
+          />
+
+          <ReusableTextbox
+            label="Phone Number"
+            name="phone_number"
+            rules={[
+              { required: true, message: "Phone number is required." },
+              {
+                pattern: /^[89]\d{7}$/,
+                message: "Phone must start with 8 or 9 and be exactly 8 digits.",
+              },
+            ]}
+            inputProps={{ placeholder: "e.g. 81234567" }}
+          />
+
+          <Form.Item
+            label="Gender"
+            name="gender"
+            rules={[{ required: true, message: "Gender is required." }]}
+          >
+            <Radio.Group>
+              <Radio value="Male">Male</Radio>
+              <Radio value="Female">Female</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item label="Assigned Cafe (optional)" name="cafe_id">
+            <Select
+              placeholder="Select a cafe"
+              allowClear
+              options={cafes.map((c) => ({ value: c.id, label: c.name }))}
+            />
+          </Form.Item>
+
+          <FormActions
+            onCancel={() => navigate("/employees")}
+            submitLabel={isEdit ? "Save Changes" : "Create Employee"}
+            loading={isSaving}
+          />
+        </Form>
+      </Card>
 
       <ConfirmModal
         open={blocker.state === "blocked"}
