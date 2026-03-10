@@ -47,8 +47,10 @@ class GetEmployeesQueryHandler:
                 name=emp.name,
                 email_address=emp.email_address,
                 phone_number=emp.phone_number,
+                gender=emp.gender,
                 days_worked=_days(asgn),
                 cafe=cafe.name if cafe else "",
+                cafe_id=asgn.cafe_id if asgn else None,
             )
             for emp, asgn, cafe in q.all()
         ]
@@ -73,8 +75,10 @@ class CreateEmployeeHandler:
             name=created.name,
             email_address=created.email_address,
             phone_number=created.phone_number,
+            gender=created.gender.value,
             days_worked=0,
             cafe="",
+            cafe_id=cmd.cafe_id,
         )
 
 
@@ -98,8 +102,10 @@ class UpdateEmployeeHandler:
             name=updated.name,
             email_address=updated.email_address,
             phone_number=updated.phone_number,
+            gender=updated.gender.value,
             days_worked=0,  # caller should re-fetch via GET for accurate value
             cafe="",
+            cafe_id=cmd.cafe_id,
         )
 
 

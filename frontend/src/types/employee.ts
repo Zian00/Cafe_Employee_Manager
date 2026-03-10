@@ -5,8 +5,10 @@ export interface Employee {
   name: string
   email_address: string
   phone_number: string
+  gender: Gender
   days_worked: number
   cafe: string
+  cafe_id: string | null
 }
 
 export interface CreateEmployeePayload {

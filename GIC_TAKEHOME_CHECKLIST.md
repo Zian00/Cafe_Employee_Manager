@@ -220,18 +220,18 @@ services:
 - [x] On edit route, prefill form from existing cafe data.
 
 ## 9. Add/Edit Employee Form Page
-- [ ] Fields and validation (use `ReusableTextbox` component where tagged):
-  - [ ] Name `[ReusableTextbox]`: min 6, max 10.
-  - [ ] Email `[ReusableTextbox]`: valid email format.
-  - [ ] Phone: SG format (`8|9` + 7 digits).
-  - [ ] Gender: radio group (`Male`, `Female`).
-  - [ ] Assigned Cafe: dropdown.
-- [ ] Submit button:
-  - [ ] `POST /employees` for create — must also create the employee-cafe assignment record.
-  - [ ] `PUT /employees` for edit — must also update the employee-cafe assignment record.
-- [ ] Cancel button navigates back to employee page.
-- [ ] Warn on unsaved changes before navigation.
-- [ ] On edit route, prefill form from existing employee data.
+- [x] Fields and validation (use `ReusableTextbox` component where tagged):
+  - [x] Name `[ReusableTextbox]`: min 6, max 10.
+  - [x] Email `[ReusableTextbox]`: valid email format.
+  - [x] Phone: SG format (`8|9` + 7 digits).
+  - [x] Gender: radio group (`Male`, `Female`).
+  - [x] Assigned Cafe: dropdown.
+- [x] Submit button:
+  - [x] `POST /employees` for create — must also create the employee-cafe assignment record.
+  - [x] `PUT /employees` for edit — must also update the employee-cafe assignment record.
+- [x] Cancel button navigates back to employee page.
+- [x] Warn on unsaved changes before navigation.
+- [x] On edit route, prefill form from existing employee data.
 
 ## 10. Testing and Quality
 - [ ] Backend unit tests:

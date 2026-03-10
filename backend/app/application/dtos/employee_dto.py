@@ -8,8 +8,10 @@ class EmployeeResponse(BaseModel):
     name: str
     email_address: str
     phone_number: str
+    gender: str
     days_worked: int
     cafe: str  # blank string if unassigned
+    cafe_id: str | None = None
 
 
 class CreateEmployeeRequest(BaseModel):
