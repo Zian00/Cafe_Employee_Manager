@@ -140,18 +140,18 @@ services:
 - [x] Add seed data for cafes, employees, and assignments.
 
 ## 3. Backend Architecture (Clean + CQRS)
-- [ ] Create layered structure per §1.1 folder tree:
-  - [ ] `app/domain/` — entities, value objects, abstract repository interfaces (no framework dependencies)
-  - [ ] `app/application/` — CQRS commands, queries, handlers (mediator targets), DTOs
-  - [ ] `app/infrastructure/` — SQLAlchemy ORM models, concrete repository implementations, Supabase storage client
-  - [ ] `alembic/` + `alembic.ini` — migration scripts at the backend root (alongside `alembic.ini`, not inside `app/`)
-  - [ ] `app/api/` — FastAPI routers, middleware, DI wiring
-- [ ] Add Mediator pattern: each command/query in `application/commands|queries/` has a matching handler in `application/handlers/`; a mediator/bus dispatches to the correct handler.
-- [ ] Add dependency injection container wiring (`dependency-injector` or FastAPI DI).
+- [x] Create layered structure per §1.1 folder tree:
+  - [x] `app/domain/` — entities, value objects, abstract repository interfaces (no framework dependencies)
+  - [x] `app/application/` — CQRS commands, queries, handlers (mediator targets), DTOs
+  - [x] `app/infrastructure/` — SQLAlchemy ORM models, concrete repository implementations, Supabase storage client
+  - [x] `alembic/` + `alembic.ini` — migration scripts at the backend root (alongside `alembic.ini`, not inside `app/`)
+  - [x] `app/api/` — FastAPI routers, middleware, DI wiring
+- [x] Add Mediator pattern: each command/query in `application/commands|queries/` has a matching handler in `application/handlers/`; a mediator/bus dispatches to the correct handler.
+- [x] Add dependency injection container wiring (`dependency-injector` or FastAPI DI).
   <!-- Note: Assignment assessment criteria lists "Autofac" which is .NET-specific; `dependency-injector` / FastAPI DI is the Python equivalent -->
-- [ ] Add CORS middleware in `app/api/main.py` — allow Vercel frontend origin (required for Railway backend + Vercel frontend cross-origin calls).
-- [ ] Add central exception handling and validation error response model (`app/api/middleware/error_handler.py`).
-- [ ] Add request/response logging (`app/api/middleware/logging.py`) and health endpoint.
+- [x] Add CORS middleware in `app/api/main.py` — allow Vercel frontend origin (required for Railway backend + Vercel frontend cross-origin calls).
+- [x] Add central exception handling and validation error response model (`app/api/middleware/error_handler.py`).
+- [x] Add request/response logging (`app/api/middleware/logging.py`) and health endpoint.
 
 ## 4. Backend API Implementation
 - [ ] `GET /cafes?location=<location>`:
