@@ -8,6 +8,13 @@ services:
       - "8000:8000"
     env_file:
       - ../backend/.env
+    develop:
+      watch:
+        - action: sync
+          path: ../backend/app
+          target: /app/app
+        - action: rebuild
+          path: ../backend/requirements.txt
 
   frontend:
     image: cafe-employee-manager-frontend
@@ -20,3 +27,9 @@ services:
       - "5173:80"
     depends_on:
       - backend
+    develop:
+      watch:
+        - action: rebuild
+          path: ../frontend/src
+        - action: rebuild
+          path: ../frontend/package.json

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input, Space, Typography } from "antd";
 import { AgGridReact } from "ag-grid-react";
@@ -16,11 +16,16 @@ export default function CafesPage() {
   const [locationFilter, setLocationFilter] = useState<string | undefined>();
   const [deleteTarget, setDeleteTarget] = useState<Cafe | null>(null);
 
+  // Debounce: update filter 300ms after the user stops typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLocationFilter(locationInput.trim() || undefined);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [locationInput]);
+
   const { data: cafes = [], isLoading } = useCafes(locationFilter);
   const { mutate: deleteCafe, isPending: isDeleting } = useDeleteCafe();
-
-  const applyFilter = () =>
-    setLocationFilter(locationInput.trim() || undefined);
 
   const colDefs: ColDef<Cafe>[] = [
     {
@@ -103,20 +108,15 @@ export default function CafesPage() {
         </Button>
       </div>
 
-      <Space style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 16 }}>
         <Input
           placeholder="Filter by location"
           value={locationInput}
-          onChange={(e) => {
-            setLocationInput(e.target.value);
-            if (!e.target.value) setLocationFilter(undefined);
-          }}
-          onPressEnter={applyFilter}
+          onChange={(e) => setLocationInput(e.target.value)}
           allowClear
           style={{ width: 240 }}
         />
-        <Button onClick={applyFilter}>Search</Button>
-      </Space>
+      </div>
 
       <div style={{ height: 500 }}>
         <AgGridReact

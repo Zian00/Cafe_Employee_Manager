@@ -18,14 +18,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from sqlalchemy import create_engine  # noqa: E402
-from sqlalchemy.orm import sessionmaker  # noqa: E402
+from sqlalchemy import create_engine 
+from sqlalchemy.orm import sessionmaker  
 
-from app.infrastructure.db.models import (  # noqa: E402
-    AssignmentModel,
-    CafeModel,
-    EmployeeModel,
-)
+from app.infrastructure.db.models.cafe_model import CafeModel  
+from app.infrastructure.db.models.employee_model import EmployeeModel 
+from app.infrastructure.db.models.assignment_model import AssignmentModel
 
 
 def _generate_employee_id() -> str:

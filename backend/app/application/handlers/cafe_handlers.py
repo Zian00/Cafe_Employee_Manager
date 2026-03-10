@@ -29,7 +29,7 @@ class GetCafesQueryHandler:
             .order_by(emp_count.desc())
         )
         if query.location is not None:
-            q = q.filter(CafeModel.location == query.location)
+            q = q.filter(CafeModel.location.ilike(f"%{query.location}%"))
 
         return [
             CafeResponse(
