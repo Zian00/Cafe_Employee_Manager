@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App-level layout */
+#root {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
