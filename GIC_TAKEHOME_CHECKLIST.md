@@ -207,17 +207,17 @@ services:
 - [x] Refresh table after delete.
 
 ## 8. Add/Edit Cafe Form Page
-- [ ] Fields and validation (use `ReusableTextbox` component where tagged):
-  - [ ] Name `[ReusableTextbox]`: min 6, max 10.
-  - [ ] Description `[ReusableTextbox]`: max 256.
-  - [ ] Logo file: max 2MB.
-  - [ ] Location `[ReusableTextbox]`.
-- [ ] Submit button:
-  - [ ] `POST /cafes` for create.
-  - [ ] `PUT /cafes` for edit.
-- [ ] Cancel button navigates back to cafe page.
-- [ ] Warn on unsaved changes before navigation.
-- [ ] On edit route, prefill form from existing cafe data.
+- [x] Fields and validation (use `ReusableTextbox` component where tagged):
+  - [x] Name `[ReusableTextbox]`: min 6, max 10.
+  - [x] Description `[ReusableTextbox]`: max 256.
+  - [x] Logo file: max 2MB.
+  - [x] Location `[ReusableTextbox]`.
+- [x] Submit button:
+  - [x] `POST /cafes` for create.
+  - [x] `PUT /cafes` for edit.
+- [x] Cancel button navigates back to cafe page.
+- [x] Warn on unsaved changes before navigation.
+- [x] On edit route, prefill form from existing cafe data.
 
 ## 9. Add/Edit Employee Form Page
 - [ ] Fields and validation (use `ReusableTextbox` component where tagged):
