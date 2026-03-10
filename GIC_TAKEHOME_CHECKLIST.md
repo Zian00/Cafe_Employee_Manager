@@ -190,13 +190,13 @@ services:
 - [x] Apply custom styling beyond default framework theme.
 
 ## 6. Cafes Page
-- [ ] Build table columns: `Logo`, `Name`, `Description`, `Employees`, `Location`, `Actions`.
-- [ ] Call `GET /cafes` on load.
-- [ ] Add location filter input and re-query behavior.
-- [ ] Make `Employees` clickable to navigate to employee page filtered by cafe.
-- [ ] Add `Add New Cafe` button.
-- [ ] Add row-level `Edit` and `Delete` with confirm modal.
-- [ ] Refresh table after delete.
+- [x] Build table columns: `Logo`, `Name`, `Description`, `Employees`, `Location`, `Actions`.
+- [x] Call `GET /cafes` on load.
+- [x] Add location filter input and re-query behavior.
+- [x] Make `Employees` clickable to navigate to employee page filtered by cafe.
+- [x] Add `Add New Cafe` button.
+- [x] Add row-level `Edit` and `Delete` with confirm modal.
+- [x] Refresh table after delete.
 
 ## 7. Employees Page
 - [ ] Build table columns: `Employee ID`, `Name`, `Email`, `Phone`, `Days Worked`, `Cafe Name`, `Actions`.
