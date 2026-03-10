@@ -250,10 +250,10 @@ services:
 - [x] Create backend Dockerfile.
 - [x] Create frontend Dockerfile.
 - [x] Create `docker-compose.yml` including database.
-- [ ] Verify full stack runs via Docker locally.
+- [x] Verify full stack runs via Docker locally.
 - [ ] Deploy frontend to `Vercel`.
 - [ ] Deploy backend Docker service to `Railway`.
-- [ ] Provision `Supabase` project (Postgres + Storage bucket) and connect backend.
+- [x] Provision `Supabase` project (Postgres + Storage bucket) and connect backend.
 - [ ] Verify production URLs and end-to-end flows.
 
 ## 12. Documentation and Submission
