@@ -2,6 +2,14 @@
 
 A full-stack web application for managing cafes and employees.
 
+## Live Demo
+
+| Service | URL |
+|---|---|
+| Frontend | https://cafe-employee-manager-kappa.vercel.app/ |
+| Backend API | https://cafeemployeemanager-production.up.railway.app |
+| API Docs | https://cafeemployeemanager-production.up.railway.app/docs |
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -9,7 +17,7 @@ A full-stack web application for managing cafes and employees.
 | Backend | FastAPI (Python 3.12), SQLAlchemy, Alembic |
 | Database | PostgreSQL (Supabase in production) |
 | File Storage | Supabase Storage |
-| Frontend | React + Vite, Ant Design, Tailwind CSS, AG Grid |
+| Frontend | React + Vite, Ant Design, AG Grid |
 | Deployment | Railway (backend), Vercel (frontend) |
 
 ## Architecture
