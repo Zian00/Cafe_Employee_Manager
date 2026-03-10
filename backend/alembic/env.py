@@ -15,7 +15,10 @@ if config.config_file_name is not None:
 # Override sqlalchemy.url from environment variable
 config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL"])
 
-from app.infrastructure.db.models import Base  # registers all models
+from app.infrastructure.db.models.base import Base
+from app.infrastructure.db.models.cafe_model import CafeModel
+from app.infrastructure.db.models.employee_model import EmployeeModel 
+from app.infrastructure.db.models.assignment_model import AssignmentModel  
 
 target_metadata = Base.metadata
 
