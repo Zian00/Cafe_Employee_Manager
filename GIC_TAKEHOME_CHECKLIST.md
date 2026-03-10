@@ -123,21 +123,21 @@ services:
 > Note: In production, `db` is replaced by Supabase Postgres — the backend only needs `DATABASE_URL` swapped via env var.
 
 ## 2. Data Model and Schema
-- [ ] Design tables/entities:
-  - [ ] `cafes` (`id` UUID PK, `name`, `description`, `logo` nullable, `location`).
-  - [ ] `employees` (`id` string PK in `UIXXXXXXX`, `name`, `email_address`, `phone_number`, `gender`).
-  - [ ] `employee_cafe_assignments` (`employee_id`, `cafe_id`, `start_date`).
-- [ ] Enforce constraints:
-  - [ ] Employee ID format: `UI` + 7 alphanumeric chars.
-  - [ ] Valid email format.
-  - [ ] SG phone format: starts with `8`/`9`, exactly 8 digits.
-  - [ ] Gender only `Male` or `Female`.
-  - [ ] One employee can belong to at most one cafe at a time.
-- [ ] Add indexes for query paths:
-  - [ ] `cafes(location)`
-  - [ ] `employee_cafe_assignments(cafe_id, start_date)`
-- [ ] Create migration scripts.
-- [ ] Add seed data for cafes, employees, and assignments.
+- [x] Design tables/entities:
+  - [x] `cafes` (`id` UUID PK, `name`, `description`, `logo` nullable, `location`).
+  - [x] `employees` (`id` string PK in `UIXXXXXXX`, `name`, `email_address`, `phone_number`, `gender`).
+  - [x] `employee_cafe_assignments` (`employee_id`, `cafe_id`, `start_date`).
+- [x] Enforce constraints:
+  - [x] Employee ID format: `UI` + 7 alphanumeric chars.
+  - [x] Valid email format.
+  - [x] SG phone format: starts with `8`/`9`, exactly 8 digits.
+  - [x] Gender only `Male` or `Female`.
+  - [x] One employee can belong to at most one cafe at a time.
+- [x] Add indexes for query paths:
+  - [x] `cafes(location)`
+  - [x] `employee_cafe_assignments(cafe_id, start_date)`
+- [x] Create migration scripts.
+- [x] Add seed data for cafes, employees, and assignments.
 
 ## 3. Backend Architecture (Clean + CQRS)
 - [ ] Create layered structure per §1.1 folder tree:

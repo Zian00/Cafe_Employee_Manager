@@ -15,10 +15,9 @@ if config.config_file_name is not None:
 # Override sqlalchemy.url from environment variable
 config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL"])
 
-# Import Base once models are defined (§2 / §3)
-# from app.infrastructure.db.models import Base
-# target_metadata = Base.metadata
-target_metadata = None
+from app.infrastructure.db.models import Base  # registers all models
+
+target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:
