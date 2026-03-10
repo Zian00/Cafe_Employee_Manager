@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, UploadFile
 from pydantic import ValidationError as PydanticValidationError
 from sqlalchemy.orm import Session
 
@@ -14,6 +14,7 @@ from app.application.dtos.cafe_dto import (
     UpdateCafeRequest,
 )
 from app.application.queries.cafes.get_cafes import GetCafesQuery
+from app.domain.exceptions import NotFoundError, ValidationError as DomainValidationError
 from app.infrastructure.db.models.cafe_model import CafeModel
 from app.infrastructure.db.session import get_db
 from app.infrastructure.storage.supabase_storage import SupabaseStorageClient
@@ -26,9 +27,7 @@ _MAX_LOGO_BYTES = 2 * 1024 * 1024  # 2 MB
 async def _upload_logo(logo: UploadFile, storage: SupabaseStorageClient) -> str:
     content = await logo.read()
     if len(content) > _MAX_LOGO_BYTES:
-        raise HTTPException(
-            status_code=422, detail="Logo file must not exceed 2 MB."
-        )
+        raise DomainValidationError("Logo file must not exceed 2 MB.")
     ext = logo.filename.rsplit(".", 1)[-1] if logo.filename and "." in logo.filename else "png"
     path = f"cafes/{uuid.uuid4()}.{ext}"
     return storage.upload(path, content, logo.content_type or "image/png")
@@ -54,8 +53,8 @@ async def create_cafe(
     """Create a new cafe. Logo upload is optional (multipart/form-data)."""
     try:
         req = CreateCafeRequest(name=name, description=description, location=location)
-    except PydanticValidationError as e:
-        raise HTTPException(status_code=422, detail=e.errors())
+    except PydanticValidationError as exc:
+        raise DomainValidationError(str(exc.errors())) from exc
 
     logo_url: str | None = None
     if logo and logo.filename:
@@ -84,13 +83,13 @@ async def update_cafe(
     """Update an existing cafe. Omit logo to keep the existing one."""
     try:
         req = UpdateCafeRequest(name=name, description=description, location=location)
-    except PydanticValidationError as e:
-        raise HTTPException(status_code=422, detail=e.errors())
+    except PydanticValidationError as exc:
+        raise DomainValidationError(str(exc.errors())) from exc
 
     # Preserve existing logo when no new file is uploaded
     existing = db.get(CafeModel, id)
     if existing is None:
-        raise HTTPException(status_code=404, detail=f"Cafe '{id}' not found.")
+        raise NotFoundError(f"Cafe '{id}' not found.")
 
     if logo and logo.filename:
         logo_url: str | None = await _upload_logo(logo, SupabaseStorageClient())

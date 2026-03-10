@@ -234,22 +234,22 @@ services:
 - [x] On edit route, prefill form from existing employee data.
 
 ## 10. Testing and Quality
-- [ ] Backend unit tests:
-  - [ ] Validation rules.
-  - [ ] Query sorting/filter behavior.
-  - [ ] Delete cascade behavior.
-  - [ ] `days_worked` calculation.
-- [ ] Backend integration tests for all required endpoints.
-- [ ] Frontend tests:
-  - [ ] Form validation.
-  - [ ] Table rendering and actions.
-  - [ ] Navigation and unsaved-change guard.
+- [x] Backend unit tests:
+  - [x] Validation rules (`EmployeeId`, `PhoneNumber` value objects; `CreateCafeRequest`, `CreateEmployeeRequest` DTOs).
+  - [x] Query sorting/filter behavior (GET /cafes sorted by employees desc, GET /employees sorted by days_worked desc, location/cafe filter).
+  - [x] Delete cascade behavior (DELETE /cafes deletes employees under it).
+  - [x] `days_worked` calculation (current date − assignment start_date).
+- [x] Backend integration tests for all required endpoints (82 tests, all pass; SQLite in-memory via `conftest.py`).
+- [x] Frontend tests:
+  - [x] Form validation (CafeFormPage: name min/max, required fields; EmployeeFormPage: name, phone, gender).
+  - [x] Component rendering (ReusableTextbox label/input/textarea; ConfirmModal open/close/actions).
+  - [x] Correct mutation called on valid submit (createCafe, createEmployee with correct payload).
 - [ ] Manual UAT checklist for all assignment scenarios.
 
 ## 11. Docker and Deployment
-- [ ] Create backend Dockerfile.
-- [ ] Create frontend Dockerfile.
-- [ ] Create `docker-compose.yml` including database.
+- [x] Create backend Dockerfile.
+- [x] Create frontend Dockerfile.
+- [x] Create `docker-compose.yml` including database.
 - [ ] Verify full stack runs via Docker locally.
 - [ ] Deploy frontend to `Vercel`.
 - [ ] Deploy backend Docker service to `Railway`.

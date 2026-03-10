@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from pydantic import ValidationError as PydanticValidationError
 
 from app.domain.exceptions import ConflictError, NotFoundError, ValidationError
 
@@ -18,3 +19,9 @@ def add_exception_handlers(app: FastAPI) -> None:
         return JSONResponse(
             status_code=422, content={"detail": str(exc)}
         )
+
+    @app.exception_handler(PydanticValidationError)
+    async def pydantic_validation_handler(
+        request: Request, exc: PydanticValidationError
+    ):
+        return JSONResponse(status_code=422, content={"detail": exc.errors()})

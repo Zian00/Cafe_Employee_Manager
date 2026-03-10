@@ -51,6 +51,11 @@ class SqlAlchemyCafeRepository(CafeRepository):
         model = self._session.get(CafeModel, id)
         if model is None:
             raise NotFoundError(f"Cafe '{id}' not found.")
+        # Spec: deleting a cafe also deletes all employees under it.
+        # Use list() snapshot to avoid mutating the collection mid-iteration.
+        for asgn in list(model.assignments):
+            self._session.delete(asgn.employee)
+        self._session.flush()
         self._session.delete(model)
         self._session.commit()
 
