@@ -39,7 +39,7 @@ def get_mediator(db: Session = Depends(get_db)) -> Mediator:
     mediator.register(GetCafesQuery, GetCafesQueryHandler(db))
     mediator.register(GetEmployeesQuery, GetEmployeesQueryHandler(db))
     mediator.register(CreateCafeCommand, CreateCafeHandler(cafe_repo))
-    mediator.register(UpdateCafeCommand, UpdateCafeHandler(cafe_repo))
+    mediator.register(UpdateCafeCommand, UpdateCafeHandler(cafe_repo, storage))
     mediator.register(DeleteCafeCommand, DeleteCafeHandler(cafe_repo, storage))
     mediator.register(CreateEmployeeCommand, CreateEmployeeHandler(employee_repo))
     mediator.register(UpdateEmployeeCommand, UpdateEmployeeHandler(employee_repo))

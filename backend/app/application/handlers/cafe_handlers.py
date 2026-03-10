@@ -67,12 +67,22 @@ class CreateCafeHandler:
 
 
 class UpdateCafeHandler:
-    def __init__(self, repo: CafeRepository) -> None:
+    def __init__(
+        self, repo: CafeRepository, storage: SupabaseStorageClient
+    ) -> None:
         self._repo = repo
+        self._storage = storage
 
     def handle(self, cmd: UpdateCafeCommand) -> CafeResponse:
-        if self._repo.get_by_id(cmd.id) is None:
+        existing = self._repo.get_by_id(cmd.id)
+        if existing is None:
             raise NotFoundError(f"Cafe '{cmd.id}' not found.")
+        # Delete old logo from storage if it has been replaced
+        if existing.logo and cmd.logo and existing.logo != cmd.logo:
+            try:
+                self._storage.delete_by_url(existing.logo)
+            except Exception:
+                pass  # Storage cleanup failure must not block DB update
         cafe = Cafe(
             id=cmd.id,
             name=cmd.name,
