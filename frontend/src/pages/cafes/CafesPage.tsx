@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Input, Space, Typography } from "antd";
+import { Button, Input, Space, Tooltip, Typography } from "antd";
+import { TeamOutlined } from "@ant-design/icons";
 import { AgGridReact } from "ag-grid-react";
 import { themeQuartz } from "ag-grid-community";
 import type { ColDef, ICellRendererParams } from "ag-grid-community";
@@ -54,15 +55,18 @@ export default function CafesPage() {
     {
       headerName: "Employees",
       field: "employees",
-      width: 120,
+      width: 130,
       cellRenderer: ({ value, data }: ICellRendererParams<Cafe>) => (
-        <Button
-          type="link"
-          style={{ padding: 0 }}
-          onClick={() => navigate(`/employees?cafe=${data?.id}`)}
-        >
-          {value as number}
-        </Button>
+        <Tooltip title="Click to view employees">
+          <Button
+            type="link"
+            icon={<TeamOutlined />}
+            style={{ padding: 0, textDecoration: "underline" }}
+            onClick={() => navigate(`/employees?cafe=${data?.id}`)}
+          >
+            {value as number}
+          </Button>
+        </Tooltip>
       ),
     },
     { headerName: "Location", field: "location", flex: 1, minWidth: 120 },
@@ -121,6 +125,7 @@ export default function CafesPage() {
       <div style={{ height: 500 }}>
         <AgGridReact
           theme={themeQuartz}
+          loadThemeGoogleFonts={false}
           rowData={cafes}
           columnDefs={colDefs}
           loading={isLoading}

@@ -78,6 +78,7 @@ export default function EmployeesPage() {
       <div style={{ height: 500 }}>
         <AgGridReact
           theme={themeQuartz}
+          loadThemeGoogleFonts={false}
           rowData={employees}
           columnDefs={colDefs}
           loading={isLoading}
