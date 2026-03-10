@@ -92,4 +92,38 @@ API docs available at `/docs` (Swagger UI) when running locally.
 
 ## Trade-offs and Assumptions
 
-_To be filled in during finalisation._
+### Architecture Decisions
+
+**CQRS + Mediator pattern**
+Commands (writes) and queries (reads) are separated into distinct handlers dispatched via a simple type-based mediator. This keeps handlers small and focused, but the synchronous implementation blocks on I/O. An async event-driven approach would scale better but adds complexity beyond the scope of this project.
+
+**Read-side query bypass**
+`GetCafesQueryHandler` and `GetEmployeesQueryHandler` bypass the repository abstraction and query the database directly with aggregations (employee counts, days-worked). This is intentional — computing these in SQL is far more efficient than loading all rows into Python. The trade-off is a slight inconsistency in the access pattern, but it's documented and isolated to the query handlers.
+
+**Per-request mediator instantiation**
+A new mediator and set of handlers are created for each request, sharing the same SQLAlchemy session. This keeps the implementation stateless and simple at the cost of minor overhead per request.
+
+**Storage failures are non-blocking**
+If Supabase Storage fails during a logo deletion, the error is caught and the database operation proceeds. This prevents orphaned DB records but may leave orphaned files in storage. Acceptable given the low frequency of deletions and the absence of a retry/cleanup job.
+
+**Dual validation (Pydantic + DB constraints)**
+Input is validated at the Pydantic DTO level and enforced again via PostgreSQL CHECK constraints. This is intentional defence-in-depth: the DB constraint is the last line of defence if validation is ever bypassed.
+
+### Data Model Assumptions
+
+- **One cafe per employee**: An employee can be assigned to at most one cafe at a time. The `employee_cafe_assignments` table uses `employee_id` as its sole primary key to enforce this at the schema level.
+- **Cascade delete on cafe**: Deleting a cafe deletes all employees assigned to it. This matches the spec requirement and simplifies referential integrity.
+- **Server-generated employee IDs**: IDs follow the `UIXXXXXXX` format and are generated server-side. Clients cannot choose or supply their own.
+- **Gender is binary**: The spec defines `Male`/`Female` only. The enum is enforced at both application and DB level.
+- **Logo stored as URL**: Cafe logos are uploaded to Supabase Storage; only the public URL is stored in the database. No binary blobs in the DB.
+- **Single tenant**: All data lives in a single PostgreSQL database with no multi-tenancy isolation.
+
+### Simplifications (Known Limitations)
+
+- No soft deletes — cascade deletes are permanent and irreversible.
+- No API versioning — a single `/` prefix is used for all endpoints.
+- No pagination — list endpoints return all records. Suitable for the seed data volume but would need `limit`/`offset` for production scale.
+- No authentication or authorisation — all endpoints are public. Adding an auth layer (e.g. JWT) would be the first production hardening step.
+- No connection pooling configuration — relies on SQLAlchemy defaults.
+- No retry logic for storage operations.
+- Frontend has no offline support or client-side caching beyond React Query's in-memory cache.
