@@ -199,12 +199,12 @@ services:
 - [x] Refresh table after delete.
 
 ## 7. Employees Page
-- [ ] Build table columns: `Employee ID`, `Name`, `Email`, `Phone`, `Days Worked`, `Cafe Name`, `Actions`.
-- [ ] Call `GET /employees` on load.
-- [ ] Support cafe-filtered view when navigated from cafe page.
-- [ ] Add `Add New Employee` button.
-- [ ] Add row-level `Edit` and `Delete` with confirm modal.
-- [ ] Refresh table after delete.
+- [x] Build table columns: `Employee ID`, `Name`, `Email`, `Phone`, `Days Worked`, `Cafe Name`, `Actions`.
+- [x] Call `GET /employees` on load.
+- [x] Support cafe-filtered view when navigated from cafe page.
+- [x] Add `Add New Employee` button.
+- [x] Add row-level `Edit` and `Delete` with confirm modal.
+- [x] Refresh table after delete.
 
 ## 8. Add/Edit Cafe Form Page
 - [ ] Fields and validation (use `ReusableTextbox` component where tagged):

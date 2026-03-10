@@ -2,13 +2,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Input, Space, Typography } from 'antd'
 import { AgGridReact } from 'ag-grid-react'
-import { ClientSideRowModelModule, ModuleRegistry, themeQuartz } from 'ag-grid-community'
+import { themeQuartz } from 'ag-grid-community'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { useCafes, useDeleteCafe } from '../../hooks/useCafes'
 import ConfirmModal from '../../components/ConfirmModal'
 import type { Cafe } from '../../types/cafe'
-
-ModuleRegistry.registerModules([ClientSideRowModelModule])
 
 const { Title } = Typography
 
